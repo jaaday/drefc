@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:decorate template="/JanelaPrincipal.xhtml">
+        <ui:define  name="centro">
+            <h:form id="formCamposEstado">
+                <p:fieldset legend="Dados do Estado">
+                    <h:panelGrid columns="2">
+                        UF:<p:inputText value="#{estadoMB.estado.uf}"/>                    
+                        Alíquota ICMS:<p:inputText value="#{estadoMB.estado.aliquotaIcms}"/>
+                    </h:panelGrid>
+                </p:fieldset>
+                <p:commandButton value="Salvar" ajax="false" update=":formCamposEstado, :tabelaEstados" action="#{estadoMB.acao()}"/>
+            </h:form>
+
+            <p:separator />
+            <p:dataTable id="tabelaEstados" value="#{estadoMB.estados}" 
+                         emptyMessage="Não há registros" var="estado" paginator="true" rows="5"
+                         selectionMode="single" rowKey="#{estado.id}"> 
+                <f:facet name="header">
+                    <h:outputText value="Estados cadastrados"/>
+                </f:facet>
+                <p:column headerText="UF"> 
+                    <center>
+                        <h:outputText value="#{estado.uf}"/> 
+                    </center>
+                </p:column> 
+                <p:column headerText="Alíquota ICMS"> 
+                    <h:outputText value="#{estado.aliquotaIcms}"/> 
+                </p:column>
+                <p:column  style="width:40px"> 
+                    <center>
+                        <h:form>
+                            <p:commandButton actionListener="#{estadoMB.remover(estado)}" id="iconTrash" update="tabelaEstados" icon="ui-icon-trash" title="Remover" />
+                        </h:form>
+                    </center>
+                </p:column>
+                <p:ajax event="rowSelect" update=":formCamposEstado" listener="#{estadoMB.onRowSelect}"/>
+            </p:dataTable> 
+        </ui:define>
+    </ui:decorate>
+</html>
+

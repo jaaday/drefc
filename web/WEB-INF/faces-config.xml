@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <managed-bean>
+        <managed-bean-name>empresaMB</managed-bean-name>
+        <managed-bean-class>br.com.melkran.drefc.bean.EmpresaMB</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>estadoMB</managed-bean-name>
+        <managed-bean-class>br.com.melkran.drefc.bean.EstadoMB</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>formaPagamentoMB</managed-bean-name>
+        <managed-bean-class>br.com.melkran.drefc.bean.FormaPagamentoMB</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>vendaMB</managed-bean-name>
+        <managed-bean-class>br.com.melkran.drefc.bean.VendaMB</managed-bean-class> 
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>despesaMB</managed-bean-name>
+        <managed-bean-class>br.com.melkran.drefc.bean.DespesaMB</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>compraMB</managed-bean-name>
+        <managed-bean-class>br.com.melkran.drefc.bean.CompraMB</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>usuarioMB</managed-bean-name>
+        <managed-bean-class>br.com.melkran.drefc.bean.UsuarioMB</managed-bean-class>
+        <managed-bean-scope>session</managed-bean-scope>
+    </managed-bean>
+</faces-config>

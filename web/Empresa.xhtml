@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:decorate template="/JanelaPrincipal.xhtml">
+        <ui:define  name="centro">
+            <h:form id="formCamposEmpresa">
+                <p:fieldset legend="Dados da Empresa">
+                    <h:inputHidden value="#{empresaMB.empresa.id}"/>
+                    <h:panelGrid columns="2">
+                        Razão Social:<p:inputText value="#{empresaMB.empresa.razaoSocial}"/>                    
+                        CNPJ:<p:inputMask mask="99.999.999/9999-99" value="#{empresaMB.empresa.cnpj}"/>
+                        Data Abertura:<p:calendar id="button" value="#{empresaMB.empresa.dataAbertura}" showOn="button" />
+                    </h:panelGrid>
+                </p:fieldset>
+                <p:commandButton value="Salvar" ajax="false" update=":formCamposEmpresa, :tabelaEmpresas" action="#{empresaMB.acao()}"/>
+            </h:form>
+
+            <p:separator />
+                
+            <p:dataTable id="tabelaEmpresas" value="#{empresaMB.empresas}" emptyMessage="Não há registros" var="empresa" paginator="true" rows="5"
+                         selectionMode="single" rowKey="#{empresa.id}">
+                <f:facet name="header">
+                    <h:outputText value="Bairros cadastrados"/>
+                </f:facet>
+                <p:column headerText="Razão Social">
+                    <h:outputText value="#{empresa.razaoSocial}"/> 
+                </p:column> 
+                <p:column headerText="CNPJ" style="width:190px">
+                    <center>
+                        <h:outputText value="#{empresa.cnpj}"/> 
+                    </center>
+
+                </p:column>
+                <p:column headerText="Data de Abertura" style="width:200px"> 
+                    <center>
+                        <h:outputText value="#{empresa.dataAbertura}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </center>
+                </p:column>             
+                <p:column style="width:40px"> 
+                    <center>
+                        <h:form>
+                            <p:commandButton actionListener="#{empresaMB.remover(empresa)}" id="iconTrash" update="tabelaEmpresas" icon="ui-icon-trash" title="Remover" />
+                        </h:form>
+                    </center>
+                </p:column>
+                <p:ajax event="rowSelect" update=":formCamposEmpresa" listener="#{empresaMB.onRowSelect}"/>
+            </p:dataTable> 
+        </ui:define>
+    </ui:decorate>
+</html>
+

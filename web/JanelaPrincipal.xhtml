@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <p:layout>
+            <p:layoutUnit position="north" size="180" closable="true" collapsible="true">
+                <center>
+                    <h:graphicImage url="/imagens/logo.png" height="auto" width="auto"/>
+                </center>
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="300" style="height: 580px">               
+                <h:form>
+                    <p:growl autoUpdate="true"/>
+                    <p:menu toggleable="true" style="width: 270px">                      
+                        <p:separator />
+                        <p:submenu label="Cadastros" >  
+                              <p:menuitem value="Empresa" outcome="/Empresa" icon="ui-icon-signal" />      
+                              <p:menuitem value="Cliente" outcome="/Cliente" icon="ui-icon-signal" />  
+                              <p:menuitem value="Estado" outcome="/Estado" icon="ui-icon-signal" />   
+                              <p:menuitem value="Forma de Pagamento" outcome="/FormaPagamento" icon="ui-icon-signal" />   
+                        </p:submenu>
+                        <p:submenu label="Controle">  
+                              <p:menuitem value="Venda" outcome="/Venda" icon="ui-icon-signal" />   
+                              <p:menuitem value="Compra" outcome="/Compra" icon="ui-icon-signal" /> 
+                              <p:menuitem value="Despesa" outcome="/Despesa" icon="ui-icon-signal" />  
+                        </p:submenu>
+                        <p:submenu label="Ralatório">
+                              <p:menuitem value="Relatório de Vendas" outcome="/RelatorioVendas" icon="ui-icon-signal" /> 
+                        </p:submenu>
+                    </p:menu>
+                </h:form>
+            </p:layoutUnit>
+
+            <p:layoutUnit position="center">
+                <ui:insert name="centro">
+
+                </ui:insert>
+            </p:layoutUnit>
+        </p:layout>
+    </h:body>
+</html>
+

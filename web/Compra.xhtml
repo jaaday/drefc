@@ -1,0 +1,84 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:decorate template="/JanelaPrincipal.xhtml">
+        <ui:define  name="centro">
+            <h:form id="formCamposCompra">
+                <p:fieldset legend="Dados da Compra">
+                    <h:panelGrid columns="2">
+                        Forma de pagamento:
+                        <p:selectOneMenu id="formaPagamento" value="#{compraMB.compra.formaPagamentoId}" effect="fade" converter="formaPagamento">
+                            <f:selectItems value="#{formaPagamentoMB.formas}" var="forma" itemLabel="#{forma.descricao}" itemValue="#{forma}" />
+                        </p:selectOneMenu>   
+                        Valor da Compra:<p:inputText value="#{compraMB.compra.valorCompra}"/>
+                        Nota Fiscal:<p:inputText value="#{compraMB.compra.notaFiscal}"/>
+                        Data da Compra:<p:calendar id="button" value="#{compraMB.compra.dataCompra}" showOn="button" />
+                        CPF:<p:inputMask mask="999.999.999-99" value="#{compraMB.compra.cpf}"/>
+                        CNPJ:<p:inputMask mask="99.999.999/9999-99" value="#{compraMB.compra.cnpj}"/>
+                    </h:panelGrid>
+                    <h:panelGrid columns="4">
+                        Origem:
+                        <p:selectOneMenu id="origem" value="#{compraMB.compra.origem}" effect="fade" converter="estado">
+                            <f:selectItems value="#{estadoMB.estados}" var="origem" itemLabel="#{origem.uf}" itemValue="#{origem}" />
+                        </p:selectOneMenu> 
+                        Destino:
+                        <p:selectOneMenu id="destino" value="#{compraMB.compra.destino}" effect="fade" converter="estado">
+                            <f:selectItems value="#{estadoMB.estados}" var="destino" itemLabel="#{destino.uf}" itemValue="#{destino}" />
+                        </p:selectOneMenu> 
+                    </h:panelGrid>
+                </p:fieldset>
+                <p:commandButton value="Salvar" ajax="false" update=":formCamposCompra, :tabelaCompras" action="#{compraMB.acao()}"/>
+            </h:form>
+
+            <p:separator />
+            <p:dataTable id="tabelaCompras" value="#{compraMB.compras}" 
+                         emptyMessage="Não há registros" var="compra" paginator="true" rows="5"
+                         selectionMode="single" rowKey="#{compra.id}"> 
+                <f:facet name="header">
+                    <h:outputText value="Compras cadastradas"/>
+                </f:facet>
+                <p:column headerText="Data da Compra"> 
+                    <center>
+                        <h:outputText value="#{compra.dataCompra}">
+                            <f:convertDateTime pattern="dd/MM/yyyy"/>
+                        </h:outputText>
+                    </center>
+                </p:column> 
+                <p:column headerText="Valor da Compra"> 
+                    <h:outputText value="#{compra.valorCompra}"/> 
+                </p:column>
+                <p:column headerText="Nota Fiscal"> 
+                    <h:outputText value="#{compra.notaFiscal}"/> 
+                </p:column>
+                <p:column headerText="CPF"> 
+                    <h:outputText value="#{compra.cpf}"/> 
+                </p:column>
+                <p:column headerText="CNPJ"> 
+                    <h:outputText value="#{compra.cnpj}"/> 
+                </p:column>
+                <p:column headerText="ICMS INTERNO"> 
+                    <h:outputText value="#{compra.origem.aliquotaIcms}"/> 
+                </p:column>
+                <p:column headerText="ICMS EXTERNO"> 
+                    <h:outputText value="#{compra.destino.aliquotaIcms}"/> 
+                </p:column>
+                <p:column  style="width:40px"> 
+                    <center>
+                        <h:form>
+                            <p:commandButton actionListener="#{compraMB.remover(compra)}" id="iconTrash" update="tabelaCompras" icon="ui-icon-trash" title="Remover" />
+                        </h:form>
+                    </center>
+                </p:column>
+                <p:ajax event="rowSelect" update=":formCamposCompra" listener="#{compraMB.onRowSelect}"/>
+            </p:dataTable> 
+        </ui:define>
+    </ui:decorate>
+</html>
+

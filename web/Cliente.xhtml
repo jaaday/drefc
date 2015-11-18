@@ -1,0 +1,57 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <ui:decorate template="/JanelaPrincipal.xhtml">
+        <ui:define  name="centro">
+            <h:form id="formCamposCliente">
+                <p:fieldset legend="Dados do Participante">
+                    <h:inputHidden value="#{participanteMB.participante.id}"/>
+                    <h:panelGrid columns="2">         
+                        Nome:<p:inputText value="#{participanteMB.participante.nome}"/>                    
+                        CPF:<p:inputMask mask="999.999.999-99" value="#{participanteMB.participante.cpf}"/>    
+                        CNPJ:<p:inputMask mask="99.999.999/9999-99" value="#{participanteMB.participante.cnpj}"/> 
+                        Endereço:<p:inputText value="#{participanteMB.participante.endereco}"/> 
+                    </h:panelGrid>
+                </p:fieldset>
+                <p:commandButton value="Salvar" ajax="false" update=":formCamposCliente, :tabelaClientes" action="#{participanteMB.acao()}"/>
+            </h:form>
+
+            <p:separator />
+            <p:dataTable id="tabelaClientes" value="#{participanteMB.clientes}" 
+                         emptyMessage="Não há registros" var="cliente" paginator="true" rows="5"
+                         selectionMode="single" rowKey="#{cliente.id}"> 
+                <f:facet name="header">
+                    <h:outputText value="Estados cadastrados"/>
+                </f:facet>
+                <p:column headerText="Nome"> 
+                    <h:outputText value="#{cliente.nome}"/> 
+                </p:column> 
+                <p:column headerText="CPF" style="width:150px"> 
+                    <h:outputText value="#{cliente.cpf}"/> 
+                </p:column>
+                <p:column headerText="CNPJ" style="width:190px"> 
+                    <h:outputText value="#{cliente.cnpj}"/> 
+                </p:column>
+                <p:column headerText="Endereço"> 
+                    <h:outputText value="#{cliente.endereco}"/> 
+                </p:column>
+                <p:column style="width:40px"> 
+                    <center>
+                        <h:form>
+                            <p:commandButton actionListener="#{participanteMB.remover(cliente)}" id="iconTrash" update="tabelaClientes" icon="ui-icon-trash" title="Remover" />
+                        </h:form>
+                    </center>
+                </p:column>
+                <p:ajax event="rowSelect" update=":formCamposCliente" listener="#{participanteMB.onRowSelect}"/>
+            </p:dataTable> 
+        </ui:define>
+    </ui:decorate>
+</html>
+
